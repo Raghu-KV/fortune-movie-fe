@@ -9,12 +9,15 @@ function App() {
   const [movies, setMovies] = useState([]);
 
   const getMovieData = async () => {
-    const responce = await fetch("http://localhost:4000/movies", {
-      headers: {
-        "x-auth-token": "FSMovies2023",
-        "Content-Type": "application/json",
-      },
-    });
+    const responce = await fetch(
+      "https://fortune-movies-be.vercel.app/movies",
+      {
+        headers: {
+          "x-auth-token": "FSMovies2023",
+          "Content-Type": "application/json",
+        },
+      }
+    );
     const data = await responce.json();
     setMovies(data);
   };
@@ -29,7 +32,7 @@ function App() {
       <NavBar />
       {movies.length > 0 ? (
         movies.map((singleCategory) => (
-          <SingleCategory category={singleCategory} />
+          <SingleCategory category={singleCategory} key={singleCategory._id} />
         ))
       ) : (
         <Loading />

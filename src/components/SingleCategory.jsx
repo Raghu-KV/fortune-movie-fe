@@ -9,7 +9,7 @@ function SingleCategory({ category }) {
       </div>
       <div className="flex justify-center md:justify-start flex-wrap gap-6">
         {category.movies.map((movie) => (
-          <SingleMovie movie={movie} />
+          <SingleMovie movie={movie} key={movie.title} />
         ))}
       </div>
     </div>
