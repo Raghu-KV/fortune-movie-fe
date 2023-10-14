@@ -1,23 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import NavBar from "./components/NavBar";
+import Loading from "./components/Loading";
+import SingleCategory from "./components/SingleCategory";
+
+import { useEffect } from "react";
+import { useState } from "react";
 
 function App() {
+  const [movies, setMovies] = useState([]);
+
+  const getMovieData = async () => {
+    const responce = await fetch("http://localhost:4000/movies", {
+      headers: {
+        "x-auth-token": "FSMovies2023",
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await responce.json();
+    setMovies(data);
+  };
+
+  useEffect(() => {
+    getMovieData();
+  }, []);
+  console.log(movies);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="min-h-screen">
+      <NavBar />
+      {movies.length > 0 ? (
+        movies.map((singleCategory) => (
+          <SingleCategory category={singleCategory} />
+        ))
+      ) : (
+        <Loading />
+      )}
     </div>
   );
 }
